@@ -79,10 +79,73 @@ class SinglyLinkedList {
     }
     return this;
   }
+
+  getVal(val) {
+    if (val < 0 || val >= this.length) return null;
+    let counter = 0;
+    let current = this.head;
+
+    while (counter !== val) {
+      current = current.next;
+      counter++;
+    }
+
+    return current;
+  }
+
+  setVal(index, newVal) {
+    let oldVal = this.getVal(index);
+    if (!oldVal) {
+      return false;
+    } else {
+      oldVal.val = newVal;
+    }
+    console.log(this);
+    return true;
+  }
+
+  insert(index, val) {
+    if (index < 0 || index > this.length) return false;
+
+    if (index === this.length) {
+      this.push(val); //Insert at the end
+    } else if (index === 0) {
+      this.unshift(val); //Insert at the beginning
+    } else {
+      let newNode = new Node(val);
+      let prevNode = this.getVal(index - 1); //Getting the node before the insertion point
+      let currentNode = prevNode.next; //Getting the node at the insertion point
+
+      prevNode.next = newNode;
+      newNode.next = currentNode;
+      this.length++;
+    }
+    console.log(this);
+    return true;
+  }
+
+  remove(index) {
+    if (index < 0 || index > this.length) return null;
+
+    let removedNode;
+    if (index === this.length) {
+      removedNode = this.pop(); //Insert at the end
+    } else if (index === 0) {
+      removedNode = this.shift(); //Insert at the beginning
+    } else {
+      let prevNode = this.getVal(index - 1);
+      removedNode = prevNode.next;
+      prevNode.next = prevNode.next.next;
+      this.length--;
+    }
+    return removedNode.val;
+  }
 }
 
 let list = new SinglyLinkedList();
-list.push("There");
-list.push("Stranger");
+list.push(8);
+list.push(1);
+list.push(3);
+list.push(1000);
 
-console.log(list.unshift("Ahoy"));
+console.log(list.remove(2));
