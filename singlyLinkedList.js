@@ -140,12 +140,28 @@ class SinglyLinkedList {
     }
     return removedNode.val;
   }
+
+  reverse() {
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+
+    let prev = null;
+    let next;
+    for (let i = 0; i < this.length; i++) {
+      next = node.next;
+      node.next = prev;
+      prev = node;
+      node = next;
+    }
+    return this;
+  }
 }
 
 let list = new SinglyLinkedList();
 list.push(8);
 list.push(1);
 list.push(3);
-list.push(1000);
+list.push(900);
 
-console.log(list.remove(2));
+console.log(list.reverse());
